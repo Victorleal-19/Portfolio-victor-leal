@@ -36,7 +36,7 @@ const featuredCases = [
     tags: ["UX Writing", "Content Design", "Strategy"],
     path: "/case/guideline-linguagem-ecommerce-magalu",
     icon: <Type size={40} className="text-white" />,
-    banner: "/images/cases/banners/guideline-banner.png",
+    banner: "/images/cases/banners/guideline-capa-2.png",
     color: "from-brand-blue/30",
     brand: "MAGALU"
   },
@@ -177,6 +177,7 @@ export default function Cases() {
                           src={featuredCases[currentIndex].banner} 
                           alt={featuredCases[currentIndex].title}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover/item:scale-105"
+                          referrerPolicy="no-referrer"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-card-dark via-transparent to-transparent " />
                       </div>

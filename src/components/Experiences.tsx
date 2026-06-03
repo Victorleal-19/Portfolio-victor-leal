@@ -21,7 +21,7 @@ const experiences: Experience[] = [
     id: "magalu",
     company: "Magazine Luiza",
     role: "UX Writer",
-    period: "07/2024 — Atual",
+    period: "07/2024 — 06/2026",
     tags: ["UX Writing", "UX Research", "IA", "Acessibilidade", "Produto"],
     isMain: true,
     summary: "Atuação no Luizalabs desenvolvendo conteúdos e microcopys para interfaces digitais do ecossistema Magalu, com foco em clareza, acessibilidade e experiência do usuário.",
@@ -193,12 +193,6 @@ const ExperienceCard: React.FC<{ exp: Experience, isMain?: boolean, open: boolea
               <h3 className={`font-bold ${isMain ? "text-2xl md:text-3xl" : "text-xl md:text-2xl"}`}>
                 {exp.company}
               </h3>
-              {isMain && (
-                <span className="flex items-center gap-1 px-3 py-1 bg-brand-blue/20 text-brand-blue border border-brand-blue/30 rounded-full text-[10px] font-bold uppercase tracking-wider">
-                  <Sparkles size={12} />
-                  Main Stage
-                </span>
-              )}
             </div>
             
             <div className="flex flex-col gap-1">
