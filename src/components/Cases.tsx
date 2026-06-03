@@ -207,7 +207,7 @@ export default function Cases() {
       {/* Other Cases Section */}
       <div className="space-y-12">
         <div className="space-y-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold">Outros <span className="text-brand-blue">Cases</span></h2>
+          <h2 className="text-2xl md:text-3xl font-bold">Outros <span className="text-brand-blue">Trabalhos</span></h2>
           <div className="h-px w-full bg-white/5" />
         </div>
 
