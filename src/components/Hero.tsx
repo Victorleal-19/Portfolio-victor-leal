@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ArrowRight, Download, MapPin } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -29,15 +29,7 @@ export default function Hero() {
             <span className="text-secondary">& Content Designer</span>
           </motion.h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex items-center justify-center gap-2 text-secondary text-sm"
-          >
-            <MapPin size={16} className="text-brand-blue" />
-            <span>Uberlândia, Minas Gerais - Brasil</span>
-          </motion.div>
+
         </div>
 
         <motion.p

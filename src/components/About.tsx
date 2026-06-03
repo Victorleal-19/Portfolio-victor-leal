@@ -29,7 +29,6 @@ export default function About() {
           />
           <div className="absolute bottom-8 left-8 z-20 space-y-2">
              <h3 className="text-3xl font-display font-bold">Victor Leal</h3>
-             <p className="text-brand-blue font-semibold uppercase tracking-widest text-xs">Uberlândia, MG • Brasil</p>
           </div>
         </motion.div>
 
