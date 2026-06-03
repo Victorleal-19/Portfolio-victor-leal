@@ -17,6 +17,7 @@ import CaseMagalu from "./pages/CaseMagalu";
 import CaseGuideline from "./pages/CaseGuideline";
 import CaseHook from "./pages/CaseHook";
 import CaseBrandbook from "./pages/CaseBrandbook";
+import CaseQueroCasamento from "./pages/CaseQueroCasamento";
 import CaseJornalista from "./pages/cases/CaseJornalista";
 import CaseRedatorCopywriter from "./pages/cases/CaseRedatorCopywriter";
 import CaseSocialMedia from "./pages/cases/CaseSocialMedia";
@@ -46,8 +47,9 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/case/favoritos-e-listas-magalu" element={<CaseMagalu />} />
-          <Route path="/case/guideline-linguagem-ecommerce-magalu" element={<CaseGuideline />} />
           <Route path="/case/projeto-hook-magalu" element={<CaseHook />} />
+          <Route path="/case/guideline-linguagem-ecommerce-magalu" element={<CaseGuideline />} />
+          <Route path="/case/quero-de-casamento-magalu" element={<CaseQueroCasamento />} />
           <Route path="/case/brandbook-cargo-sapiens" element={<CaseBrandbook />} />
           <Route path="/cases/jornalista" element={<CaseJornalista />} />
           <Route path="/cases/redator-copywriter" element={<CaseRedatorCopywriter />} />

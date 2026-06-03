@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "motion/react";
-import { ArrowUpRight, Smartphone, Heart, Sparkles, ChevronLeft, ChevronRight, Layout, Zap, Search, Globe, Type, Target, BookOpen } from "lucide-react";
+import { ArrowUpRight, Smartphone, Heart, Sparkles, ChevronLeft, ChevronRight, Layout, Zap, Search, Globe, Type, Target, BookOpen, Wallet } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 
@@ -38,6 +38,18 @@ const featuredCases = [
     icon: <Type size={40} className="text-white" />,
     banner: "/images/cases/banners/guideline-banner.png",
     color: "from-brand-blue/30",
+    brand: "MAGALU"
+  },
+  {
+    id: 12,
+    title: "Quero de Casamento: Resgate de Saldo para MagaluPay",
+    category: "UX Writing & Content Design",
+    description: "Mapeamento da jornada, curadoria de termos de fintech e microcopies que transformaram a experiência financeira dos noivos com total transparência e segurança.",
+    tags: ["UX Writing", "Linguagem Financeira", "Carteira Digital", "MagaluPay"],
+    path: "/case/quero-de-casamento-magalu",
+    icon: <Wallet size={40} className="text-white" />,
+    banner: "/images/cases/banners/qdc.jpg",
+    color: "from-brand-blue/45",
     brand: "MAGALU"
   },
   {
