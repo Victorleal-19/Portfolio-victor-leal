@@ -369,7 +369,7 @@ export default function CaseMagalu() {
                       <div className="space-y-4">
                          <span className="text-[10px] font-bold text-green-500 uppercase tracking-widest bg-green-500/10 px-2 py-1 rounded">Depois</span>
                          <p className="text-secondary leading-relaxed">
-                            Decisão estratégica de linguagem: uso do termo "salvar" em vez de "favoritar" e introdução de micro-feedbacks instantâneos de sucesso.
+                            A comunicação passou a informar de forma clara e imediata quando um produto foi salvo ou removido dos favoritos, aumentando a confiança e a previsibilidade da experiência.
                          </p>
                       </div>
                    </div>
