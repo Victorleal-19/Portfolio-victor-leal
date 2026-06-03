@@ -21,17 +21,13 @@ const toolCategories = [
       "Claude Code",
       "ChatGPT",
       "Gemini",
-      "Notebook LM",
-      "Google AI Studio",
-      "VoiceFlow",
-      "Lovable",
-      "Antigravity",
-      "VS Code"
+      "NotebookLM",
+      "Manus"
     ],
     icon: <Bot size={20} className="text-brand-blue" />,
   },
   {
-    name: "UX, Design & Research",
+    name: "UX Design & Research",
     tools: [
       "Figma",
       "FigJam",
@@ -39,7 +35,10 @@ const toolCategories = [
       "Miro",
       "Canva",
       "Photoshop",
-      "CapCut"
+      "CapCut",
+      "Maze",
+      "Hotjar",
+      "UXCam"
     ],
     icon: <Pencil size={20} className="text-brand-blue" />,
   },
@@ -48,7 +47,9 @@ const toolCategories = [
     tools: [
       "Google Trends",
       "Ubersuggest",
-      "Google Analytics"
+      "Google Analytics",
+      "Google Search Console",
+      "SEMrush"
     ],
     icon: <BarChart size={20} className="text-brand-blue" />,
   },
@@ -66,6 +67,21 @@ const toolCategories = [
     ],
     icon: <Globe size={20} className="text-brand-blue" />,
   },
+  {
+    name: "Development & Vibe Coding",
+    tools: [
+      "VS Code",
+      "Claude Code",
+      "Codex",
+      "Google AI Studio",
+      "Lovable",
+      "Antigravity",
+      "Voiceflow",
+      "Vercel",
+      "Netlify"
+    ],
+    icon: <Code size={20} className="text-brand-blue" />,
+  },
 ];
 
 export default function Tools() {
@@ -76,7 +92,7 @@ export default function Tools() {
           <h2 className="text-3xl md:text-5xl font-bold">Stack de <span className="text-brand-blue">Ferramentas</span></h2>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
           {toolCategories.map((cat, i) => (
             <motion.div
               key={cat.name}
