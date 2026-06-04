@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowUpRight, Smartphone, Heart, Sparkles, ChevronLeft, ChevronRight, Layout, Zap, Search, Globe, Type, Target, BookOpen, Wallet } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 const featuredCases = [
   {
@@ -68,6 +68,15 @@ const featuredCases = [
 
 const otherCases = [
   {
+    id: 13,
+    title: "Newsletter Think Labs",
+    category: "Content Strategy • UX Writing • Editorial",
+    description: "Estruturei e conduzi a estratégia editorial da newsletter Think Labs, responsável por disseminar tendências, inovação e novos modelos de negócio para públicos internos e externos do Magalu.",
+    tags: ["Content Strategy", "UX Writing", "Editorial"],
+    banner: "/images/cases/others/newsller-capa.png",
+    path: "/cases/newsletter-think-labs"
+  },
+  {
     id: 4,
     title: "Jornalista — Cultura Preta",
     category: "Jornalismo / Conteúdo Editorial",
@@ -99,6 +108,39 @@ const otherCases = [
 export default function Cases() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [activeOtherIndex, setActiveOtherIndex] = useState(0);
+  const otherCarouselRef = useRef<HTMLDivElement>(null);
+
+  const scrollOther = (direction: "left" | "right") => {
+    if (otherCarouselRef.current) {
+      const { scrollLeft } = otherCarouselRef.current;
+      const scrollAmount = direction === "left" ? -412 : 412; // card width (380px) + gap (32px / 8)
+      otherCarouselRef.current.scrollTo({
+        left: scrollLeft + scrollAmount,
+        behavior: "smooth"
+      });
+    }
+  };
+
+  const handleOtherScroll = () => {
+    if (otherCarouselRef.current) {
+      const children = Array.from(otherCarouselRef.current.children);
+      if (children.length > 0) {
+        let minDistance = Infinity;
+        let activeIdx = 0;
+        children.forEach((child, idx) => {
+          const rect = (child as HTMLElement).getBoundingClientRect();
+          const parentRect = otherCarouselRef.current!.getBoundingClientRect();
+          const distance = Math.abs(rect.left - parentRect.left);
+          if (distance < minDistance) {
+            minDistance = distance;
+            activeIdx = idx;
+          }
+        });
+        setActiveOtherIndex(activeIdx);
+      }
+    }
+  };
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev === featuredCases.length - 1 ? 0 : prev + 1));
@@ -218,97 +260,157 @@ export default function Cases() {
       </div>
 
       {/* Other Cases Section */}
-      <div className="space-y-12">
+      <div className="space-y-12 relative">
         <div className="space-y-4 text-center">
           <h2 className="text-2xl md:text-3xl font-bold">Outros <span className="text-brand-blue">Trabalhos</span></h2>
           <div className="h-px w-full bg-white/5" />
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {otherCases.map((c, i) => (
-            <Link key={c.id} to={c.path} className="block group">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="h-full bg-card-dark border border-white/5 rounded-[32px] overflow-hidden hover:bg-white/[0.04] hover:border-brand-blue/30 transition-all flex flex-col justify-between"
+        {/* Carousel Container */}
+        <div className="relative w-full overflow-hidden">
+          <div 
+            ref={otherCarouselRef}
+            onScroll={handleOtherScroll}
+            className="flex gap-8 overflow-x-auto scrollbar-none scroll-smooth pb-4 px-1"
+            style={{ scrollSnapType: "x mandatory", scrollbarWidth: "none" }}
+          >
+            {otherCases.map((c, i) => (
+              <div 
+                key={c.id} 
+                className="w-[290px] sm:w-[350px] md:w-[380px] shrink-0" 
+                style={{ scrollSnapAlign: "start" }}
               >
-                {/* Horizontal Banner image */}
-                <div className="relative aspect-video w-full overflow-hidden bg-[#0d0d0e] border-b border-white/5 flex flex-col">
-                  {c.id === 5 && (
-                    <div className="flex items-center gap-1.5 px-4 py-2 bg-[#121214]/95 border-b border-white/5 z-20 shrink-0 shadow-sm">
-                      <div className="flex gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-red-500/80" />
-                        <span className="w-1.5 h-1.5 rounded-full bg-yellow-500/80" />
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-500/80" />
+                <Link to={c.path} className="block group h-full">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="h-full bg-card-dark border border-white/5 rounded-[32px] overflow-hidden hover:bg-white/[0.04] hover:border-brand-blue/30 transition-all flex flex-col justify-between"
+                  >
+                    {/* Horizontal Banner image */}
+                    <div className="relative aspect-video w-full overflow-hidden bg-[#0d0d0e] border-b border-white/5 flex flex-col">
+                      {c.id === 13 && (
+                        <div className="flex items-center justify-between px-4 py-2 bg-[#121214]/95 border-b border-white/5 z-20 shrink-0 text-[7px] text-white/45 font-bold uppercase tracking-widest font-mono shadow-sm">
+                          <span className="flex items-center gap-1">
+                            <span className="w-1 h-1 rounded-full bg-brand-blue" />
+                            Think Labs
+                          </span>
+                          <span>Inovação & Tendências</span>
+                        </div>
+                      )}
+                      {c.id === 5 && (
+                        <div className="flex items-center gap-1.5 px-4 py-2 bg-[#121214]/95 border-b border-white/5 z-20 shrink-0 shadow-sm">
+                          <div className="flex gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-500/80" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-yellow-500/80" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-green-500/80" />
+                          </div>
+                          <div className="flex-1 max-w-[170px] mx-auto h-4 bg-white/5 rounded-md flex items-center justify-center text-[7px] text-white/40 font-mono border border-white/5">
+                            behance.net/portfolio-copy
+                          </div>
+                        </div>
+                      )}
+                      {c.id === 6 && (
+                        <div className="flex items-center justify-between px-4 py-1.5 bg-[#121214]/95 border-b border-white/5 z-20 shrink-0 text-[7px] text-white/45 font-semibold font-sans shadow-sm">
+                          <span>09:41</span>
+                          <div className="w-12 h-2.5 bg-black rounded-full flex items-center justify-center border border-white/5">
+                            <div className="w-1 h-1 rounded-full bg-neutral-900" />
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span>5G</span>
+                            <div className="w-3 h-1.5 border border-white/20 rounded-[2px]" />
+                          </div>
+                        </div>
+                      )}
+                      {c.id === 4 && (
+                        <div className="flex items-center justify-between px-4 py-2 bg-[#121214]/95 border-b border-white/5 z-20 shrink-0 text-[7px] text-white/45 font-bold uppercase tracking-widest font-mono shadow-sm">
+                          <span className="flex items-center gap-1">
+                            <span className="w-1 h-1 rounded-full bg-brand-blue" />
+                            Cultura Preta
+                          </span>
+                          <span>Edição Especial</span>
+                        </div>
+                      )}
+
+                      <div className="relative flex-1 overflow-hidden flex items-center justify-center bg-[#0d0d0e]">
+                        <img 
+                          src={c.banner} 
+                          alt={c.title} 
+                          className={`max-h-full transition-transform duration-500 group-hover:scale-103 ${c.id === 4 ? "max-w-full object-contain" : "w-full h-full object-cover"}`}
+                          referrerPolicy="no-referrer"
+                        />
+                        {c.id !== 4 && (
+                          <div className="absolute inset-0 bg-gradient-to-t from-card-dark/80 via-transparent to-transparent pointer-events-none" />
+                        )}
                       </div>
-                      <div className="flex-1 max-w-[170px] mx-auto h-4 bg-white/5 rounded-md flex items-center justify-center text-[7px] text-white/40 font-mono border border-white/5">
-                        behance.net/portfolio-copy
-                      </div>
-                    </div>
-                  )}
-                  {c.id === 6 && (
-                    <div className="flex items-center justify-between px-4 py-1.5 bg-[#121214]/95 border-b border-white/5 z-20 shrink-0 text-[7px] text-white/45 font-semibold font-sans shadow-sm">
-                      <span>09:41</span>
-                      <div className="w-12 h-2.5 bg-black rounded-full flex items-center justify-center border border-white/5">
-                        <div className="w-1 h-1 rounded-full bg-neutral-900" />
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <span>5G</span>
-                        <div className="w-3 h-1.5 border border-white/20 rounded-[2px]" />
-                      </div>
-                    </div>
-                  )}
-                  {c.id === 4 && (
-                    <div className="flex items-center justify-between px-4 py-2 bg-[#121214]/95 border-b border-white/5 z-20 shrink-0 text-[7px] text-white/45 font-bold uppercase tracking-widest font-mono shadow-sm">
-                      <span className="flex items-center gap-1">
-                        <span className="w-1 h-1 rounded-full bg-brand-blue" />
-                        Cultura Preta
+                      
+                      {/* Category overlay */}
+                      <span className="absolute bottom-4 left-4 px-3 py-1 bg-bg-dark/85 backdrop-blur-md border border-white/10 text-[9px] font-bold text-white/80 rounded-lg uppercase tracking-wider z-20">
+                        {c.category}
                       </span>
-                      <span>Edição Especial</span>
                     </div>
-                  )}
 
-                  <div className="relative flex-1 overflow-hidden flex items-center justify-center bg-[#0d0d0e]">
-                    <img 
-                      src={c.banner} 
-                      alt={c.title} 
-                      className={`max-h-full transition-transform duration-500 group-hover:scale-103 ${c.id === 4 ? "max-w-full object-contain" : "w-full h-full object-cover"}`}
-                      referrerPolicy="no-referrer"
-                    />
-                    {c.id !== 4 && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-card-dark/80 via-transparent to-transparent pointer-events-none" />
-                    )}
-                  </div>
-                  
-                  {/* Category overlay */}
-                  <span className="absolute bottom-4 left-4 px-3 py-1 bg-bg-dark/85 backdrop-blur-md border border-white/10 text-[9px] font-bold text-white/80 rounded-lg uppercase tracking-wider z-20">
-                    {c.category}
-                  </span>
-                </div>
+                    <div className="p-6 md:p-8 flex-1 flex flex-col justify-between space-y-6">
+                      <div className="space-y-3">
+                        <div className="flex gap-2 flex-wrap">
+                          {c.tags.map(tag => (
+                            <span key={tag} className="text-[9px] font-bold text-white/45 uppercase tracking-widest">{tag}</span>
+                          ))}
+                        </div>
+                        <h4 className="text-xl font-bold group-hover:text-brand-blue transition-colors leading-tight">{c.title}</h4>
+                        <p className="text-sm text-secondary leading-relaxed line-clamp-3">{c.description}</p>
+                      </div>
 
-                <div className="p-6 md:p-8 flex-1 flex flex-col justify-between space-y-6">
-                  <div className="space-y-3">
-                    <div className="flex gap-2 flex-wrap">
-                      {c.tags.map(tag => (
-                        <span key={tag} className="text-[9px] font-bold text-white/45 uppercase tracking-widest">{tag}</span>
-                      ))}
+                      <div className="pt-4 border-t border-white/5 flex items-center justify-between group/link">
+                         <span className="text-xs font-bold text-white/40 group-hover/link:text-white transition-colors">Ver case completo</span>
+                         <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover/link:bg-brand-blue group-hover/link:border-brand-blue group-hover/link:text-white transition-all">
+                           <ArrowUpRight size={14} className="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
+                         </div>
+                      </div>
                     </div>
-                    <h4 className="text-xl font-bold group-hover:text-brand-blue transition-colors leading-tight">{c.title}</h4>
-                    <p className="text-sm text-secondary leading-relaxed line-clamp-3">{c.description}</p>
-                  </div>
+                  </motion.div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
 
-                  <div className="pt-4 border-t border-white/5 flex items-center justify-between group/link">
-                     <span className="text-xs font-bold text-white/40 group-hover/link:text-white transition-colors">Ver case completo</span>
-                     <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover/link:bg-brand-blue group-hover/link:border-brand-blue group-hover/link:text-white transition-all">
-                       <ArrowUpRight size={14} className="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
-                     </div>
-                  </div>
-                </div>
-              </motion.div>
-            </Link>
-          ))}
+        {/* Carousel Controls */}
+        <div className="flex items-center justify-center gap-6 pt-4">
+           <button 
+             onClick={() => scrollOther('left')}
+             className="p-2 text-secondary hover:text-white hover:bg-white/5 active:scale-95 border border-white/10 rounded-full transition-all"
+             aria-label="Voltar"
+           >
+             <ChevronLeft size={24} />
+           </button>
+           
+           <div className="flex gap-2">
+             {otherCases.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    if (otherCarouselRef.current) {
+                      const scrollSnapWidth = otherCarouselRef.current.scrollWidth / otherCases.length;
+                      otherCarouselRef.current.scrollTo({
+                        left: i * scrollSnapWidth,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${activeOtherIndex === i ? "w-8 bg-brand-blue" : "bg-white/20"}`}
+                />
+             ))}
+           </div>
+
+           <button 
+             onClick={() => scrollOther('right')}
+             className="p-2 text-secondary hover:text-white hover:bg-white/5 active:scale-95 border border-white/10 rounded-full transition-all"
+             aria-label="Avançar"
+           >
+             <ChevronRight size={24} />
+           </button>
         </div>
       </div>
     </section>

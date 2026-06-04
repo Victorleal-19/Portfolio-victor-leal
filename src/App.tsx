@@ -21,6 +21,7 @@ import CaseQueroCasamento from "./pages/CaseQueroCasamento";
 import CaseJornalista from "./pages/cases/CaseJornalista";
 import CaseRedatorCopywriter from "./pages/cases/CaseRedatorCopywriter";
 import CaseSocialMedia from "./pages/cases/CaseSocialMedia";
+import CaseThinkLabs from "./pages/cases/CaseThinkLabs";
 
 function Home() {
   return (
@@ -51,6 +52,7 @@ export default function App() {
           <Route path="/case/guideline-linguagem-ecommerce-magalu" element={<CaseGuideline />} />
           <Route path="/case/quero-de-casamento-magalu" element={<CaseQueroCasamento />} />
           <Route path="/case/brandbook-cargo-sapiens" element={<CaseBrandbook />} />
+          <Route path="/cases/newsletter-think-labs" element={<CaseThinkLabs />} />
           <Route path="/cases/jornalista" element={<CaseJornalista />} />
           <Route path="/cases/redator-copywriter" element={<CaseRedatorCopywriter />} />
           <Route path="/cases/social-media" element={<CaseSocialMedia />} />
