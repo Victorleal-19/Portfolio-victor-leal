@@ -21,7 +21,7 @@ const experiences: Experience[] = [
     id: "magalu",
     company: "Magazine Luiza",
     role: "UX Writer",
-    period: "07/2024 — 06/2026",
+    period: "Entrada: 07/2024 — Saída: 06/2026",
     tags: ["UX Writing", "UX Research", "IA", "Acessibilidade", "Produto"],
     isMain: true,
     summary: "Atuação no Luizalabs desenvolvendo conteúdos e microcopys para interfaces digitais do ecossistema Magalu, com foco em clareza, acessibilidade e experiência do usuário.",
@@ -49,7 +49,7 @@ const experiences: Experience[] = [
     id: "cultura-preta",
     company: "Cultura Preta",
     role: "Jornalista",
-    period: "2021 — Atual",
+    period: "Entrada: 02/2021 — Atual",
     tags: ["Jornalismo", "Conteúdo", "Storytelling", "Editorial"],
     summary: (
       <>
@@ -73,7 +73,7 @@ const experiences: Experience[] = [
     id: "hawk",
     company: "Hawk Agency",
     role: "Copywriter",
-    period: "2020 — 2021",
+    period: "Entrada: 04/2022 — Saída: 07/2024",
     tags: ["Copywriting", "SEO", "CRO", "Marketing"],
     summary: "Conteúdo orientado à conversão e performance em campanhas multiplataformas.",
     details: [
@@ -95,7 +95,7 @@ const experiences: Experience[] = [
     id: "multivisi",
     company: "Multivisi",
     role: "Copywriter",
-    period: "2019 — 2020",
+    period: "Entrada: 06/2021 — Saída: 04/2022",
     tags: ["SEO", "Automação", "E-mail Marketing", "Conteúdo"],
     summary: "Gestão de funis de conteúdo e automação de marketing para geração de leads.",
     details: [
@@ -117,7 +117,7 @@ const experiences: Experience[] = [
     id: "ecos",
     company: "Ecos Energia Solar",
     role: "Social Media",
-    period: "2018 — 2019",
+    period: "Entrada: 08/2021 → Saída: 12/2021",
     tags: ["Social Media", "Landing Pages", "Conteúdo", "Marketing"],
     summary: "Construção de presença digital e relacionamento para o setor de energia solar.",
     details: [
@@ -135,14 +135,14 @@ const experiences: Experience[] = [
     id: "unitri",
     company: "UNITRI",
     role: "Jornalista",
-    period: "2017 — 2018",
+    period: "Entrada: 05/2019 → Saída: 05/2021",
     tags: ["Jornalismo", "Storytelling", "PR", "Rádio"],
     summary: "Produção institucional e jornalística focada no ecossistema acadêmico.",
     details: [
       {
         title: "Experiência Editorial",
         items: [
-          "Produção jornalística, entrevistas e conteúdo institucional",
+          "Produção jornalística, interviews e conteúdo institucional",
           "Storytelling e roteirização para rádio",
           "Divulgação de cases de sucesso e eventos institucionais"
         ]
@@ -152,8 +152,8 @@ const experiences: Experience[] = [
   {
     id: "freelancer",
     company: "Freelancer",
-    role: "UX Writer & Content Strategist",
-    period: "2021 — Atual",
+    role: "UX Writer | Copywriter | Social Media | Jornalista",
+    period: "2019 — Atual",
     tags: ["UX Writing", "Copywriting", "Tráfego Pago", "Marketing"],
     summary: "Atuação multidisciplinar para marcas e projetos institucionais.",
     details: [
