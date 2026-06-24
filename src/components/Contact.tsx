@@ -74,7 +74,7 @@ export default function Contact() {
           ))}
           
           <motion.a
-            href="https://drive.google.com/file/d/1ctcDkJTjfS1GaqajdKTYiznT0STGUOCm/view?usp=drive_link"
+            href="https://drive.google.com/file/d/1C3P89VZFnmw6YIriinxWBgM92QhpqExl/view?usp=drive_link"
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0, scale: 0.95 }}
