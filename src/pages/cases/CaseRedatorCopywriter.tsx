@@ -2,8 +2,14 @@ import { motion } from "motion/react";
 import { ArrowLeft, BookOpen, ExternalLink, Mail, CheckCircle2, Award, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { useLanguage } from "../../i18n/LanguageContext";
+import LanguageSelector from "../../components/LanguageSelector";
+import { copywriterData } from "../../i18n/cases/copywriterData";
 
 export default function CaseRedatorCopywriter() {
+  const { language } = useLanguage();
+  const t = copywriterData[language];
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -15,12 +21,17 @@ export default function CaseRedatorCopywriter() {
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <Link to="/" className="flex items-center gap-2 text-secondary hover:text-white transition-colors group">
             <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-            <span className="font-medium text-sm">Voltar para home</span>
+            <span className="font-medium text-sm">{t.back}</span>
           </Link>
-          <div className="hidden md:flex gap-2">
-            <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest bg-white/5 px-2 py-1 rounded">Copywriting</span>
-            <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest bg-white/5 px-2 py-1 rounded">Conversão</span>
-            <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest bg-white/5 px-2 py-1 rounded">Performance</span>
+          <div className="flex items-center gap-4">
+            <div className="hidden md:flex gap-2">
+              {t.navBadges.map((badge, idx) => (
+                <span key={idx} className="text-[10px] font-bold text-white/40 uppercase tracking-widest bg-white/5 px-2 py-1 rounded">
+                  {badge}
+                </span>
+              ))}
+            </div>
+            <LanguageSelector />
           </div>
         </div>
       </nav>
@@ -35,7 +46,7 @@ export default function CaseRedatorCopywriter() {
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-wrap justify-center md:justify-start gap-2"
           >
-            {["Copywriting", "E-mail Marketing", "Landing Pages", "Conversão", "Funil de Vendas", "Escrita Persuasiva"].map(tag => (
+            {t.tags.map(tag => (
               <span key={tag} className="px-3 py-1 bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-[10px] font-bold rounded-full uppercase tracking-wider">
                 {tag}
               </span>
@@ -47,7 +58,7 @@ export default function CaseRedatorCopywriter() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-7xl font-display font-bold leading-tight"
           >
-            Redator e Copywriter
+            {t.title}
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -55,7 +66,7 @@ export default function CaseRedatorCopywriter() {
             transition={{ delay: 0.2 }}
             className="text-xl md:text-2xl text-secondary leading-relaxed font-light max-w-4xl"
           >
-            Criação de conteúdos estratégicos orientados à conversão, relacionamento e performance digital.
+            {t.heroDesc}
           </motion.p>
         </div>
       </section>
@@ -96,22 +107,22 @@ export default function CaseRedatorCopywriter() {
       <section className="px-6 py-12">
         <div className="max-w-5xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 border-y border-white/5 py-12">
           <div className="space-y-1">
-            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">Metodologia</span>
-            <p className="text-secondary text-sm">AIDA & Gatilhos Persuasivos</p>
+            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">{t.overview.methodLabel}</span>
+            <p className="text-secondary text-sm">{t.overview.methodValue}</p>
           </div>
           <div className="space-y-1">
-            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">Objetivo</span>
-            <p className="text-brand-blue font-bold px-2 py-0.5 bg-brand-blue/10 rounded inline-block text-[10px]">Relacionamento & Conversão</p>
+            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">{t.overview.objectiveLabel}</span>
+            <p className="text-brand-blue font-bold px-2 py-0.5 bg-brand-blue/10 rounded inline-block text-[10px]">{t.overview.objectiveValue}</p>
           </div>
           <div className="space-y-1">
-            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">Canais</span>
-            <p className="text-secondary text-sm leading-snug">E-mail Marketing, Landing Pages, Anúncios</p>
+            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">{t.overview.channelsLabel}</span>
+            <p className="text-secondary text-sm leading-snug">{t.overview.channelsValue}</p>
           </div>
           <div className="space-y-1">
-            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">Estilo</span>
+            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">{t.overview.styleLabel}</span>
             <p className="text-secondary text-sm font-bold flex items-center gap-2">
               <Mail size={14} className="text-brand-blue" />
-              Objetivo & Persuasivo
+              {t.overview.styleValue}
             </p>
           </div>
         </div>
@@ -121,16 +132,12 @@ export default function CaseRedatorCopywriter() {
       <main className="px-6 space-y-24 mt-12">
         <section className="max-w-4xl mx-auto space-y-12">
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold border-l-4 border-brand-blue pl-6 py-2">Minha Atuação Estratégica</h2>
-            <p className="text-secondary leading-relaxed text-lg">
-              Como Copywriter, atuo na elaboração e disparo de E-mails Marketing, com o objetivo não somente de vender, mas também como forma de me relacionar com a pessoa consumidora.
-            </p>
-            <p className="text-secondary leading-relaxed text-lg">
-              Além de e-mails marketing, também trabalho na elaboração de Landing Pages, onde o principal objetivo é gerar conversões de leads ou vendas.
-            </p>
-            <p className="text-secondary leading-relaxed text-lg">
-              Para isso, prezo sempre por produzir conteúdos claros e concisos que despertem curiosidade, criem interesse e provoquem desejo no público-alvo, incentivando ações positivas e decisões de conversão conscientes e eficientes.
-            </p>
+            <h2 className="text-3xl font-bold border-l-4 border-brand-blue pl-6 py-2">{t.strategicTitle}</h2>
+            {t.strategicParas.map((para, idx) => (
+              <p key={idx} className="text-secondary leading-relaxed text-lg">
+                {para}
+              </p>
+            ))}
           </div>
 
           <div className="flex justify-center pt-8">
@@ -141,7 +148,7 @@ export default function CaseRedatorCopywriter() {
               className="px-10 py-5 bg-brand-blue hover:bg-brand-blue/90 text-white font-bold rounded-2xl flex items-center gap-2 glow-blue shadow-lg transition-all transform hover:-translate-y-1"
             >
               <ExternalLink size={18} />
-              Ver projetos no Behance
+              {t.ctaButton}
             </a>
           </div>
         </section>
@@ -152,14 +159,11 @@ export default function CaseRedatorCopywriter() {
             <div className="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center text-brand-blue">
               <Award size={24} />
             </div>
-            Minha Abordagem Metodológica
+            {t.methodTitle}
           </h4>
           <div className="grid md:grid-cols-2 gap-12">
             <ul className="space-y-8">
-              {[
-                { title: "Despertar Curiosidade", desc: "Criar ganchos e assuntos irresistíveis que rompem a apatia do usuário na caixa de entrada ou feed." },
-                { title: "Nutrição e Valor", desc: "Fornecer conteúdo real que instrui e melhora a vida do usuário de forma imediata antes de propor ofertas." }
-              ].map((item, i) => (
+              {t.methodCol1.map((item, i) => (
                 <li key={i} className="space-y-2 text-center md:text-left">
                   <h5 className="font-bold text-white flex items-center gap-2 justify-center md:justify-start">
                     <span className="text-brand-blue">0{i+1}.</span>
@@ -170,10 +174,7 @@ export default function CaseRedatorCopywriter() {
               ))}
             </ul>
             <ul className="space-y-8">
-              {[
-                { title: "Linguagem Sem Barreiras", desc: "Remover jargões técnicos para focar em clareza extrema e alinhamento tático com as dores do público." },
-                { title: "Chamadas Claras (CTA)", desc: "Construir convites à ação diretos, honestos e fáceis de assimilar, otimizando cliques de conversão." }
-              ].map((item, i) => (
+              {t.methodCol2.map((item, i) => (
                 <li key={i} className="space-y-2 text-center md:text-left">
                   <h5 className="font-bold text-white flex items-center gap-2 justify-center md:justify-start">
                     <span className="text-brand-blue">0{i+3}.</span>

@@ -1,7 +1,12 @@
 import { motion } from "motion/react";
 import { Quote } from "lucide-react";
+import { useLanguage } from "../i18n/LanguageContext";
+import { translations } from "../i18n/translations";
 
 export default function About() {
+  const { language } = useLanguage();
+  const t = translations[language].about;
+
   return (
     <section id="about" className="py-24 px-6 max-w-7xl mx-auto space-y-16">
       <div className="grid md:grid-cols-2 gap-16 items-center">
@@ -11,7 +16,7 @@ export default function About() {
            viewport={{ once: true }}
            className="relative aspect-[4/5] bg-card-dark rounded-[40px] overflow-hidden group"
         >
-          {/* Placeholder for Victor's photo */}
+          {/* Photo */}
           <div className="absolute inset-0 bg-gradient-to-t from-bg-dark via-transparent to-transparent z-10 opacity-60" />
           <img 
             src="/images/perfil.jpeg" 
@@ -39,39 +44,34 @@ export default function About() {
           className="space-y-10"
         >
           <div className="space-y-4">
-            <h2 className="text-3xl md:text-5xl font-bold">Um pouco + sobre <span className="text-brand-blue">Mim</span></h2>
+            <h2 className="text-3xl md:text-5xl font-bold">{t.titleMain} <span className="text-brand-blue">{t.titleHighlight}</span></h2>
           </div>
 
           <div className="space-y-6 text-lg text-secondary leading-relaxed font-light">
-             <p>
-               Me considero uma pessoa curiosa por natureza, e acredito que isso seja uma ótima qualidade (e você?). Também sou bastante flexível e adaptável, gosto de trabalhar em equipe e trocar ideias com pessoas diferentes para construir soluções melhores de forma colaborativa.
-             </p>
-             <p>
-               Tenho muita vontade de aprender, explorar coisas novas e transformar conhecimento em prática no dia a dia. Por isso, estou sempre estudando temas ligados a UX Writing, pesquisa, IA, acessibilidade e linguagem simples. 
-               
-               Além disso, adoro escrever, ler, ouvir e contar boas histórias. Sou alto-astral, gosto de estar perto de quem amo e acredito muito no poder que uma boa comunicação tem de aproximar pessoas.
-             </p>
+             <p>{t.p1}</p>
+             <p className="whitespace-pre-line">{t.p2}</p>
+             {t.p3 && <p>{t.p3}</p>}
           </div>
 
           <div className="relative p-8 bg-brand-blue/5 border-l-4 border-brand-blue rounded-r-3xl">
              <Quote size={40} className="absolute -top-4 -right-4 text-brand-blue/20" />
              <p className="text-xl font-display font-medium italic text-white/90">
-               "O que me move é a missão de facilitar o acesso à informação por meio da linguagem simples, humana e acessível para todas as pessoas."
+               {t.quote}
              </p>
           </div>
 
           <div className="flex gap-8">
              <div className="space-y-1">
-                <p className="text-3xl font-bold text-white">5+</p>
-                <p className="text-[10px] uppercase font-bold text-brand-blue tracking-tighter">Anos de experiência</p>
+                <p className="text-3xl font-bold text-white">{t.stat1Number}</p>
+                <p className="text-[10px] uppercase font-bold text-brand-blue tracking-tighter">{t.stat1Label}</p>
              </div>
              <div className="space-y-1">
-                <p className="text-3xl font-bold text-white">15+</p>
-                <p className="text-[10px] uppercase font-bold text-brand-blue tracking-tighter">Grandes marcas</p>
+                <p className="text-3xl font-bold text-white">{t.stat2Number}</p>
+                <p className="text-[10px] uppercase font-bold text-brand-blue tracking-tighter">{t.stat2Label}</p>
              </div>
              <div className="space-y-1">
-                <p className="text-3xl font-bold text-white">100%</p>
-                <p className="text-[10px] uppercase font-bold text-brand-blue tracking-tighter">Foco no usuário</p>
+                <p className="text-3xl font-bold text-white">{t.stat3Number}</p>
+                <p className="text-[10px] uppercase font-bold text-brand-blue tracking-tighter">{t.stat3Label}</p>
              </div>
           </div>
         </motion.div>
@@ -79,3 +79,4 @@ export default function About() {
     </section>
   );
 }
+

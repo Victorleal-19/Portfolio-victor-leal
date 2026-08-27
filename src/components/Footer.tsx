@@ -1,7 +1,10 @@
-import { motion } from "motion/react";
+import { useLanguage } from "../i18n/LanguageContext";
+import { translations } from "../i18n/translations";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { language } = useLanguage();
+  const t = translations[language].footer;
 
   return (
     <footer className="py-12 px-6 border-t border-white/5">
@@ -11,10 +14,11 @@ export default function Footer() {
         </div>
         
         <div className="text-sm text-secondary text-center md:text-right">
-          <p>© {currentYear} Victor Leal. Todos os direitos reservados.</p>
-          <p className="mt-1">Desenvolvido com <span className="text-brand-blue">Estratégia & Design System</span>.</p>
+          <p>© {currentYear} Victor Leal. {t.rights}</p>
+          <p className="mt-1">{t.craftedWith} <span className="text-brand-blue">{t.craftedHighlight}</span>.</p>
         </div>
       </div>
     </footer>
   );
 }
+

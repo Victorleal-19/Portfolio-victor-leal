@@ -1,7 +1,12 @@
 import { motion } from "motion/react";
 import { ArrowRight, Download } from "lucide-react";
+import { useLanguage } from "../i18n/LanguageContext";
+import { translations } from "../i18n/translations";
 
 export default function Hero() {
+  const { language } = useLanguage();
+  const t = translations[language].hero;
+
   return (
     <section className="relative min-h-[90vh] flex flex-col justify-center items-center px-6 pt-20 overflow-hidden">
       {/* Background Decor */}
@@ -15,7 +20,7 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
           className="inline-flex items-center gap-2 px-3 py-1 bg-brand-blue/10 border border-brand-blue/20 rounded-full text-xs font-semibold text-brand-blue uppercase tracking-widest"
         >
-          Disponível para novos desafios
+          {t.badge}
         </motion.div>
 
         <div className="space-y-4">
@@ -25,11 +30,9 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-5xl md:text-8xl font-display font-bold leading-tight"
           >
-            UX Writer <br />
-            <span className="text-secondary">& Content Designer</span>
+            {t.title1} <br />
+            <span className="text-secondary">{t.title2}</span>
           </motion.h1>
-
-
         </div>
 
         <motion.p
@@ -38,7 +41,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-lg md:text-xl text-secondary max-w-2xl mx-auto leading-relaxed"
         >
-          UX Writer com origem no Jornalismo e vivência em Marketing Digital. Com a missão de garantir o acesso à informação para todos, conecto UX Writing, Pesquisa, IA e visão de produto para criar experiências mais claras, acessíveis e orientadas a resultados.
+          {t.bio}
         </motion.p>
 
         <motion.div
@@ -51,7 +54,7 @@ export default function Hero() {
             href="#cases"
             className="group px-8 py-4 bg-brand-blue text-white font-bold rounded-2xl flex items-center gap-2 glow-blue glow-blue-hover transition-all"
           >
-            Ver cases
+            {t.viewCases}
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </a>
           <a
@@ -61,7 +64,7 @@ export default function Hero() {
             className="px-8 py-4 bg-white/5 border border-white/10 text-white font-bold rounded-2xl flex items-center gap-2 hover:bg-white/10 transition-all cursor-pointer"
           >
             <Download size={20} />
-            Baixar CV
+            {t.downloadCv}
           </a>
         </motion.div>
       </div>
@@ -80,3 +83,4 @@ export default function Hero() {
     </section>
   );
 }
+

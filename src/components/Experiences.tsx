@@ -1,175 +1,10 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ChevronDown, Sparkles } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import { useLanguage } from "../i18n/LanguageContext";
+import { getExperiencesData, LocalizedExperience } from "../i18n/experiencesData";
 
-interface Experience {
-  id: string;
-  company: string;
-  role: string;
-  period: string;
-  tags: string[];
-  summary: string | React.ReactNode;
-  details?: {
-    title: string;
-    items: string[];
-  }[];
-  isMain?: boolean;
-}
-
-const experiences: Experience[] = [
-  {
-    id: "magalu",
-    company: "Magazine Luiza",
-    role: "UX Writer",
-    period: "Entrada: 07/2024 — Saída: 06/2026",
-    tags: ["UX Writing", "UX Research", "IA", "Acessibilidade", "Produto"],
-    isMain: true,
-    summary: "Atuação no Luizalabs desenvolvendo conteúdos e microcopys para interfaces digitais do ecossistema Magalu, com foco em clareza, acessibilidade e experiência do usuário.",
-    details: [
-      {
-        title: "Responsabilidades",
-        items: [
-          "Construção de fluxos de navegação, microcopys (botões, mensagens de erro, notificações)",
-          "E-mails transacionais e orientações estratégicas no app e site",
-          "Participação ativa em discovery e pesquisas com usuários (testes de usabilidade, entrevistas)",
-          "Aplicação de estratégias de UX Research para validação de tom e voz"
-        ]
-      },
-      {
-        title: "Estratégia & Colaboração",
-        items: [
-          "Trabalho em colaboração direta com Product Designers, Desenvolvedores e POs",
-          "Aplicação de linguagem simples, acessibilidade e design centrado no usuário",
-          "Implementação de IA aplicada ao fluxo de criação de conteúdo"
-        ]
-      }
-    ]
-  },
-  {
-    id: "cultura-preta",
-    company: "Cultura Preta",
-    role: "Jornalista",
-    period: "Entrada: 02/2021 — Atual",
-    tags: ["Jornalismo", "Conteúdo", "Storytelling", "Editorial"],
-    summary: (
-      <>
-        O Jornalismo sempre será minha grande paixão na área da comunicação. Adoro ler, ouvir e contar boas histórias e não à toa, escrevo para alguns portais independentes de notícia. Atualmente sou colunista do Cultura Preta, um site de notícias e entretenimento voltado para o povo preto.
-        <br /><br />
-        Acesse: <a href="https://culturapreta.com/" target="_blank" rel="noopener noreferrer" className="text-brand-blue hover:underline font-medium">culturapreta.com</a>
-      </>
-    ),
-    details: [
-      {
-        title: "Atuação Editorial",
-        items: [
-          "Produção de matérias aprofundadas e entrevistas exclusivas",
-          "Cobertura cultural com foco em representatividade",
-          "Storytelling aplicado ao jornalismo digital"
-        ]
-      }
-    ]
-  },
-  {
-    id: "hawk",
-    company: "Hawk Agency",
-    role: "Copywriter",
-    period: "Entrada: 04/2022 — Saída: 07/2024",
-    tags: ["Copywriting", "SEO", "CRO", "Marketing"],
-    summary: "Conteúdo orientado à conversão e performance em campanhas multiplataformas.",
-    details: [
-      {
-        title: "Performance & Growth",
-        items: [
-          "Criação de conteúdo multiplataforma para campanhas de mídia paga",
-          "Estratégias de SEO e conteúdo orientado à conversão (CRO)",
-          "Storytelling aplicado a campanhas de vendas e branding"
-        ]
-      },
-      {
-        title: "Stack",
-        items: ["ChatGPT", "Ubersuggest", "Google Trends"]
-      }
-    ]
-  },
-  {
-    id: "multivisi",
-    company: "Multivisi",
-    role: "Copywriter",
-    period: "Entrada: 06/2021 — Saída: 04/2022",
-    tags: ["SEO", "Automação", "E-mail Marketing", "Conteúdo"],
-    summary: "Gestão de funis de conteúdo e automação de marketing para geração de leads.",
-    details: [
-      {
-        title: "Inbound Marketing",
-        items: [
-          "Desenvolvimento de Landing Pages e materiais ricos",
-          "Automações de e-mail marketing e réguas de relacionamento",
-          "Gestão de base de contatos e conversão via RD Station"
-        ]
-      },
-      {
-        title: "Ferramenta",
-        items: ["RD Station"]
-      }
-    ]
-  },
-  {
-    id: "ecos",
-    company: "Ecos Energia Solar",
-    role: "Social Media",
-    period: "Entrada: 08/2021 → Saída: 12/2021",
-    tags: ["Social Media", "Landing Pages", "Conteúdo", "Marketing"],
-    summary: "Construção de presença digital e relacionamento para o setor de energia solar.",
-    details: [
-      {
-        title: "Digital Presence",
-        items: [
-          "Criação de calendários editoriais e gestão de redes sociais",
-          "Atendimento e relacionamento com clientes (SAC)",
-          "Produção visual e textual para landing pages e anúncios"
-        ]
-      }
-    ]
-  },
-  {
-    id: "unitri",
-    company: "UNITRI",
-    role: "Jornalista",
-    period: "Entrada: 05/2019 → Saída: 05/2021",
-    tags: ["Jornalismo", "Storytelling", "PR", "Rádio"],
-    summary: "Produção institucional e jornalística focada no ecossistema acadêmico.",
-    details: [
-      {
-        title: "Experiência Editorial",
-        items: [
-          "Produção jornalística, interviews e conteúdo institucional",
-          "Storytelling e roteirização para rádio",
-          "Divulgação de cases de sucesso e eventos institucionais"
-        ]
-      }
-    ]
-  },
-  {
-    id: "freelancer",
-    company: "Freelancer",
-    role: "UX Writer | Copywriter | Social Media | Jornalista",
-    period: "2019 — Atual",
-    tags: ["UX Writing", "Copywriting", "Tráfego Pago", "Marketing"],
-    summary: "Atuação multidisciplinar para marcas e projetos institucionais.",
-    details: [
-      {
-        title: "Atuação Estratégica",
-        items: [
-          "Criação de estratégias de conteúdo orientadas pelo comportamento do usuário",
-          "Experiência com marcas como UFU, Lunar Alimentos, Planalto Ovos e Igep Clínica",
-          "Foco em produzir experiências claras e acessíveis para diversos públicos"
-        ]
-      }
-    ]
-  }
-];
-
-const ExperienceCard: React.FC<{ exp: Experience, isMain?: boolean, open: boolean, onToggle: () => void }> = ({ exp, isMain, open, onToggle }) => {
+const ExperienceCard: React.FC<{ exp: LocalizedExperience, isMain?: boolean, open: boolean, onToggle: () => void }> = ({ exp, isMain, open, onToggle }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -228,9 +63,9 @@ const ExperienceCard: React.FC<{ exp: Experience, isMain?: boolean, open: boolea
           >
             <div className={`p-8 md:p-10 pt-0 border-t border-white/5 space-y-8`}>
               <div className="mt-8">
-                <p className={`leading-relaxed text-secondary ${isMain ? "text-lg md:text-xl" : "text-base"}`}>
+                <div className={`leading-relaxed text-secondary ${isMain ? "text-lg md:text-xl" : "text-base"}`}>
                   {exp.summary}
-                </p>
+                </div>
               </div>
 
               <div className={`grid grid-cols-1 ${isMain && exp.details && exp.details.length > 1 ? "md:grid-cols-2" : ""} gap-8`}>
@@ -254,10 +89,12 @@ const ExperienceCard: React.FC<{ exp: Experience, isMain?: boolean, open: boolea
       </AnimatePresence>
     </motion.div>
   );
-}
+};
 
 export default function Experiences() {
   const [openId, setOpenId] = useState<string | null>("magalu");
+  const { language } = useLanguage();
+  const { titleMain, titleHighlight, subtitle, items: experiences } = getExperiencesData(language);
 
   const mainExp = experiences.find(e => e.isMain);
   const secondaryExps = experiences.filter(e => !e.isMain);
@@ -266,8 +103,8 @@ export default function Experiences() {
     <section id="experiences" className="py-24 px-6 bg-white/[0.01]">
       <div className="max-w-6xl mx-auto space-y-16">
         <div className="text-center space-y-4">
-          <h2 className="text-3xl md:text-5xl font-bold">Trajetória e <span className="text-brand-blue">Experiências</span></h2>
-          <p className="text-secondary max-w-2xl mx-auto">De jornalista a UX Writer: uma jornada pautada por clareza, empatia e estratégia orientada a produto.</p>
+          <h2 className="text-3xl md:text-5xl font-bold">{titleMain} <span className="text-brand-blue">{titleHighlight}</span></h2>
+          <p className="text-secondary max-w-2xl mx-auto">{subtitle}</p>
         </div>
 
         <div className="space-y-6">

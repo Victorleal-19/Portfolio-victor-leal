@@ -1,128 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { useLanguage } from "../i18n/LanguageContext";
+import { getCoursesData, Course } from "../i18n/coursesData";
 
-const featuredCourses = [
-  {
-    name: "Jornalismo",
-    institution: "Universidade Cruzeiro do Sul",
-    year: "2018 — 2023",
-    featured: true,
-    tags: ["Jornalismo", "Comunicação", "Conteúdo", "Storytelling", "Pesquisa"],
-  },
-  {
-    name: "Inglês",
-    institution: "Fluency Academy + CELIN UFU",
-    year: "2022 — Atual",
-    featured: true,
-    cursando: true,
-    tags: ["Inglês", "Comunicação", "Idiomas", "Conversação"],
-  },
-  {
-    name: "Certificação em UX Writing & Conteúdo Digital",
-    institution: "Aldeia",
-    year: "2022",
-    featured: true,
-    tags: ["UX Writing", "Content Design", "Microcopy", "UX", "Produto"],
-  },
-];
-
-const regularCourses = [
-  {
-    name: "AI Product Week",
-    institution: "PM3",
-    year: "2026",
-    tags: ["IA", "Produto", "Discovery", "Estratégia", "Dados", "Research"],
-  },
-  {
-    name: "Claude AI: Prompts, Integrações e Automações",
-    institution: "IA Portugal",
-    year: "2026",
-    tags: ["IA", "Prompt Engineering", "Automação", "Claude", "Integrações", "AI Tools"],
-  },
-  {
-    name: "Como aplicar IA no trabalho",
-    institution: "Cubo Academy",
-    year: "2026",
-    tags: ["IA", "Produtividade", "Prompting", "Automação", "Trabalho"],
-  },
-  {
-    name: "Prompt Engineering para SEO",
-    institution: "Conversion",
-    year: "2025",
-    tags: ["SEO", "IA", "Prompt Engineering", "Conteúdo", "Gemini", "ChatGPT"],
-  },
-  {
-    name: "SEO Summit",
-    institution: "Conversion",
-    year: "2024",
-    tags: ["SEO", "Marketing Orgânico", "Growth", "Conteúdo", "Performance"],
-  },
-  {
-    name: "IA para Marketing",
-    institution: "Conversion",
-    year: "2024",
-    tags: ["IA", "Marketing", "Conteúdo", "Automação", "Dados"],
-  },
-  {
-    name: "Criando chatbots com a plataforma BLiP",
-    institution: "Udemy",
-    year: "2023",
-    tags: ["Chatbots", "BLiP", "Conversational AI", "UX", "Automação"],
-  },
-  {
-    name: "Curso de Linguagem Simples",
-    institution: "Enap",
-    year: "2022",
-    tags: ["Linguagem Simples", "Acessibilidade", "Clareza", "Conteúdo", "UX Writing"],
-  },
-  {
-    name: "Certificação em UX Research",
-    institution: "Udemy",
-    year: "2022",
-    tags: ["UX Research", "Pesquisa", "Usuário", "Discovery", "Insights"],
-  },
-  {
-    name: "Curso de UX Design",
-    institution: "FIAP",
-    year: "2022",
-    tags: ["UX Design", "Arquitetura da Informação", "Persona", "Protótipos", "Usabilidade"],
-  },
-  {
-    name: "Design Conversacional",
-    institution: "Domestika",
-    year: "2022",
-    tags: ["Conversational Design", "Chatbots", "UX Writing", "Interfaces Conversacionais"],
-  },
-  {
-    name: "Certificação em Metodologias Ágeis",
-    institution: "FM2S",
-    year: "2022",
-    tags: ["Agile", "Scrum", "Kanban", "Produto", "Metodologias"],
-  },
-  {
-    name: "Certificação em Copywriting",
-    institution: "Rock Content",
-    year: "2021",
-    tags: ["Copywriting", "Conteúdo", "Persuasão", "Marketing", "Escrita"],
-  },
-  {
-    name: "Certificação em Marketing de Conteúdo",
-    institution: "Rock Content",
-    year: "2021",
-    tags: ["Marketing de Conteúdo", "SEO", "Estratégia", "Conteúdo", "Funil"],
-  },
-];
-
-interface Course {
-  name: string;
-  institution: string;
-  year: string;
-  tags: string[];
-  featured?: boolean;
-  cursando?: boolean;
-}
-
-const CourseCard: React.FC<{ course: Course; index: number }> = ({ course, index }) => {
+const CourseCard: React.FC<{ course: Course; index: number; inProgressBadge: string }> = ({ course, index, inProgressBadge }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -145,8 +26,8 @@ const CourseCard: React.FC<{ course: Course; index: number }> = ({ course, index
               {course.name}
             </h3>
             {course.cursando && (
-              <span className="shrink-0 px-2.2 py-0.5 rounded-full bg-brand-blue text-[10px] font-bold text-white uppercase tracking-wider">
-                Cursando
+              <span className="shrink-0 px-2.5 py-0.5 rounded-full bg-brand-blue text-[10px] font-bold text-white uppercase tracking-wider">
+                {inProgressBadge}
               </span>
             )}
           </div>
@@ -174,9 +55,11 @@ const CourseCard: React.FC<{ course: Course; index: number }> = ({ course, index
       </div>
     </motion.div>
   );
-}
+};
 
 export default function Courses() {
+  const { language } = useLanguage();
+  const { titleMain, titleHighlight, subtitle, inProgressBadge, featured: featuredCourses, regular: regularCourses } = getCoursesData(language);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 4;
   
@@ -196,15 +79,15 @@ export default function Courses() {
   return (
     <section id="courses" className="py-24 px-6 max-w-7xl mx-auto space-y-16">
       <div className="space-y-4 text-center">
-        <h2 className="text-3xl md:text-5xl font-bold">Cursos e <span className="text-brand-blue">Especializações</span></h2>
-        <p className="text-secondary max-w-xl mx-auto">Aprendizado contínuo focado em UX Writing, IA, Estratégia de Conteúdo e Produto.</p>
+        <h2 className="text-3xl md:text-5xl font-bold">{titleMain} <span className="text-brand-blue">{titleHighlight}</span></h2>
+        <p className="text-secondary max-w-xl mx-auto">{subtitle}</p>
       </div>
 
       <div className="space-y-12">
         {/* Featured Courses Grid - Static */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {featuredCourses.map((course, i) => (
-            <CourseCard key={course.name} course={course as Course} index={i} />
+            <CourseCard key={course.name} course={course} index={i} inProgressBadge={inProgressBadge} />
           ))}
         </div>
 
@@ -212,7 +95,7 @@ export default function Courses() {
         <div className="relative min-h-[220px]">
           <AnimatePresence mode="wait">
             <motion.div
-              key={currentPage}
+              key={`${language}-${currentPage}`}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
@@ -222,8 +105,9 @@ export default function Courses() {
               {pages[currentPage].map((course, i) => (
                 <CourseCard 
                   key={course.name} 
-                  course={course as Course} 
+                  course={course} 
                   index={i} 
+                  inProgressBadge={inProgressBadge}
                 />
               ))}
             </motion.div>
@@ -238,7 +122,7 @@ export default function Courses() {
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
                   currentPage === i ? "bg-brand-blue w-6" : "bg-white/10"
                 }`}
-                aria-label={`Página ${i + 1}`}
+                aria-label={`Page ${i + 1}`}
               />
             ))}
           </div>

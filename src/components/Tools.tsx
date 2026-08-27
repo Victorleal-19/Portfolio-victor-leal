@@ -1,95 +1,95 @@
 import { motion } from "motion/react";
 import { 
   Bot, 
-  MessageSquare, 
   Globe, 
   BarChart, 
-  Layout, 
-  Smartphone, 
   Terminal,
   Pencil,
-  Zap,
-  Cpu,
   Code
 } from "lucide-react";
-
-const toolCategories = [
-  {
-    name: "AI & Content",
-    tools: [
-      "Claude",
-      "Claude Code",
-      "ChatGPT",
-      "Gemini",
-      "NotebookLM",
-      "Manus"
-    ],
-    icon: <Bot size={20} className="text-brand-blue" />,
-  },
-  {
-    name: "UX Design & Research",
-    tools: [
-      "Figma",
-      "FigJam",
-      "Figma Make",
-      "Miro",
-      "Canva",
-      "Photoshop",
-      "CapCut",
-      "Maze",
-      "Hotjar",
-      "UXCam"
-    ],
-    icon: <Pencil size={20} className="text-brand-blue" />,
-  },
-  {
-    name: "SEO & Analytics",
-    tools: [
-      "Google Trends",
-      "Ubersuggest",
-      "Google Analytics",
-      "Google Search Console",
-      "SEMrush"
-    ],
-    icon: <BarChart size={20} className="text-brand-blue" />,
-  },
-  {
-    name: "Documentation & Collaboration",
-    tools: [
-      "Notion",
-      "Confluence",
-      "Zeroheight",
-      "Google Workspace",
-      "Slack",
-      "Discord",
-      "Asana",
-      "Trello"
-    ],
-    icon: <Globe size={20} className="text-brand-blue" />,
-  },
-  {
-    name: "Development & Vibe Coding",
-    tools: [
-      "VS Code",
-      "Claude Code",
-      "Codex",
-      "Google AI Studio",
-      "Lovable",
-      "Antigravity",
-      "Voiceflow",
-      "Vercel",
-      "Netlify"
-    ],
-    icon: <Code size={20} className="text-brand-blue" />,
-  },
-];
+import { useLanguage } from "../i18n/LanguageContext";
+import { translations } from "../i18n/translations";
 
 export default function Tools() {
+  const { language } = useLanguage();
+  const t = translations[language].tools;
+
+  const toolCategories = [
+    {
+      name: t.categories.aiContent,
+      tools: [
+        "Claude",
+        "Claude Code",
+        "ChatGPT",
+        "Gemini",
+        "NotebookLM",
+        "Manus"
+      ],
+      icon: <Bot size={20} className="text-brand-blue" />,
+    },
+    {
+      name: t.categories.uxDesignResearch,
+      tools: [
+        "Figma",
+        "FigJam",
+        "Figma Make",
+        "Miro",
+        "Canva",
+        "Photoshop",
+        "CapCut",
+        "Maze",
+        "Hotjar",
+        "UXCam"
+      ],
+      icon: <Pencil size={20} className="text-brand-blue" />,
+    },
+    {
+      name: t.categories.seoAnalytics,
+      tools: [
+        "Google Trends",
+        "Ubersuggest",
+        "Google Analytics",
+        "Google Search Console",
+        "SEMrush"
+      ],
+      icon: <BarChart size={20} className="text-brand-blue" />,
+    },
+    {
+      name: t.categories.docCollaboration,
+      tools: [
+        "Notion",
+        "Confluence",
+        "Zeroheight",
+        "Google Workspace",
+        "Slack",
+        "Discord",
+        "Asana",
+        "Trello"
+      ],
+      icon: <Globe size={20} className="text-brand-blue" />,
+    },
+    {
+      name: t.categories.devCoding,
+      tools: [
+        "VS Code",
+        "Claude Code",
+        "Codex",
+        "Google AI Studio",
+        "Lovable",
+        "Antigravity",
+        "Voiceflow",
+        "Vercel",
+        "Netlify"
+      ],
+      icon: <Code size={20} className="text-brand-blue" />,
+    },
+  ];
+
   return (
     <section id="tools" className="py-24 px-6 bg-white/[0.02]">
       <div className="max-w-7xl mx-auto space-y-16">
         <div className="text-center space-y-4">
-          <h2 className="text-3xl md:text-5xl font-bold">Stack de <span className="text-brand-blue">Ferramentas</span></h2>
+          <h2 className="text-3xl md:text-5xl font-bold">{t.titleMain} <span className="text-brand-blue">{t.titleHighlight}</span></h2>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
@@ -127,8 +127,8 @@ export default function Tools() {
 
         <div className="p-12 bg-gradient-to-r from-brand-blue/10 to-transparent border border-brand-blue/20 rounded-[40px] flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden relative">
           <div className="space-y-4 relative z-10">
-            <h3 className="text-2xl md:text-3xl font-bold italic tracking-tight">"Design de conteúdo é descobrir a melhor maneira de dar às pessoas a informação que elas precisam, no formato que precisam, no momento exato."</h3>
-            <p className="text-secondary">— Sarah Winters, fundadora do Content Design London</p>
+            <h3 className="text-2xl md:text-3xl font-bold italic tracking-tight">{t.quote}</h3>
+            <p className="text-secondary">{t.quoteAuthor}</p>
           </div>
           <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-brand-blue/20 rounded-full blur-[100px]" />
           <Terminal size={120} className="text-brand-blue/5 absolute right-10 top-1/2 -translate-y-1/2 rotate-12" />
@@ -137,3 +137,4 @@ export default function Tools() {
     </section>
   );
 }
+

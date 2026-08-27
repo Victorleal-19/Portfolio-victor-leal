@@ -1,19 +1,24 @@
 import { motion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
-
-const navItems = [
-  { name: "Cases", href: "#cases" },
-  { name: "Experiências", href: "#experiences" },
-  { name: "Cursos", href: "#courses" },
-  { name: "Ferramentas", href: "#tools" },
-  { name: "Sobre mim", href: "#about" },
-  { name: "Contato", href: "#contact" },
-];
+import { useLanguage } from "../i18n/LanguageContext";
+import { translations } from "../i18n/translations";
+import LanguageSelector from "./LanguageSelector";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { language } = useLanguage();
+  const t = translations[language].nav;
+
+  const navItems = [
+    { name: t.cases, href: "#cases" },
+    { name: t.experiences, href: "#experiences" },
+    { name: t.courses, href: "#courses" },
+    { name: t.tools, href: "#tools" },
+    { name: t.about, href: "#about" },
+    { name: t.contact, href: "#contact" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,33 +44,46 @@ export default function Navbar() {
         </motion.div>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6 lg:gap-8">
           {navItems.map((item, index) => (
             <motion.a
-              key={item.name}
+              key={item.href}
               href={item.href}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.05 }}
               className="text-sm font-medium text-secondary hover:text-white transition-colors"
             >
               {item.name}
             </motion.a>
           ))}
+
+          {/* Language Selector placed before CTA */}
+          <div className="flex items-center">
+            <LanguageSelector />
+          </div>
+
           <motion.a
             href="#contact"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="px-5 py-2 bg-brand-blue text-white text-sm font-semibold rounded-full glow-blue glow-blue-hover transition-all"
+            className="px-5 py-2 bg-brand-blue text-white text-sm font-semibold rounded-full glow-blue glow-blue-hover transition-all shrink-0"
           >
-            Bora conversar?
+            {t.cta}
           </motion.a>
         </div>
 
-        {/* Mobile Toggle */}
-        <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Mobile Toggle and Language Selector */}
+        <div className="flex items-center gap-3 md:hidden">
+          <LanguageSelector />
+          <button 
+            className="text-white p-1" 
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Abrir menu / Open menu"
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -77,14 +95,21 @@ export default function Navbar() {
         <div className="flex flex-col gap-4 p-6">
           {navItems.map((item) => (
             <a
-              key={item.name}
+              key={item.href}
               href={item.href}
-              className="text-lg font-medium text-secondary hover:text-white"
+              className="text-lg font-medium text-secondary hover:text-white py-1"
               onClick={() => setIsOpen(false)}
             >
               {item.name}
             </a>
           ))}
+          <a
+            href="#contact"
+            className="mt-2 px-5 py-3 bg-brand-blue text-white text-center text-sm font-semibold rounded-full glow-blue"
+            onClick={() => setIsOpen(false)}
+          >
+            {t.cta}
+          </a>
         </div>
       </motion.div>
     </nav>

@@ -1,111 +1,17 @@
 import { motion, AnimatePresence } from "motion/react";
-import { ArrowUpRight, Smartphone, Heart, Sparkles, ChevronLeft, ChevronRight, Layout, Zap, Search, Globe, Type, Target, BookOpen, Wallet } from "lucide-react";
+import { ArrowUpRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useCallback, useRef } from "react";
-
-const featuredCases = [
-  {
-    id: 1,
-    title: "Nova experiência: Favoritos e Listas no Magalu",
-    category: "UX Writing & Content Design",
-    description: "A funcionalidade de Favoritos do SuperApp do Magalu registrava milhões de interações mensais, mas o que deveria ser um motor de conversão estava se tornando um ponto de frustração.",
-    tags: ["UX Writing", "Content Design", "SuperApp", "Magalu"],
-    path: "/case/favoritos-e-listas-magalu",
-    icon: <Heart size={40} className="text-white fill-white" />,
-    banner: "/images/cases/banners/favoritos-banner.png",
-    color: "from-brand-blue/20",
-    brand: "MAGALU"
-  },
-  {
-    id: 10,
-    title: "Projeto Hook: UX Writing para Conversão no Magalu",
-    category: "UX Writing & Conversion Strategy",
-    description: "O Projeto Hook nasceu da necessidade de entender como elementos de interface e gatilhos comportamentais poderiam aumentar conversão e engajamento no e-commerce.",
-    tags: ["UX Writing", "Conversão", "Economia Comportamental"],
-    path: "/case/projeto-hook-magalu",
-    icon: <Target size={40} className="text-white" />,
-    banner: "/images/cases/banners/hook-banner.png",
-    color: "from-brand-blue/40",
-    brand: "MAGALU"
-  },
-  {
-    id: 7,
-    title: "Guideline: Linguagem para E-commerce Magalu",
-    category: "Governança & Linguagem",
-    description: "A comunicação textual do e-commerce apresentava inconsistências recorrentes no uso de letras maiúsculas, minúsculas e caixa alta, impactando diretamente a clareza e a qualidade.",
-    tags: ["UX Writing", "Content Design", "Strategy"],
-    path: "/case/guideline-linguagem-ecommerce-magalu",
-    icon: <Type size={40} className="text-white" />,
-    banner: "/images/cases/banners/guideline-capa-2.png",
-    color: "from-brand-blue/30",
-    brand: "MAGALU"
-  },
-  {
-    id: 12,
-    title: "Quero de Casamento: Resgate de Saldo para MagaluPay",
-    category: "UX Writing & Content Design",
-    description: "Mapeamento da jornada, curadoria de termos de fintech e microcopies que transformaram a experiência financeira dos noivos com total transparência e segurança.",
-    tags: ["UX Writing", "Linguagem Financeira", "Carteira Digital", "MagaluPay"],
-    path: "/case/quero-de-casamento-magalu",
-    icon: <Wallet size={40} className="text-white" />,
-    banner: "/images/cases/banners/qdc.jpg",
-    color: "from-brand-blue/45",
-    brand: "MAGALU"
-  },
-  {
-    id: 11,
-    title: "Criação de Brandbook: Cargo Sapiens",
-    category: "UX Writing & Branding",
-    description: "A Cargo Sapiens precisava estruturar sua comunicação para garantir consistência e clareza em todos os pontos de contato com o cliente.",
-    tags: ["UX Writing", "Brandbook", "Branding", "Content Strategy"],
-    path: "/case/brandbook-cargo-sapiens",
-    icon: <BookOpen size={40} className="text-white" />,
-    banner: "/images/cases/banners/brandbook-banner.png",
-    color: "from-brand-blue/50",
-    brand: "CARGO"
-  }
-];
-
-const otherCases = [
-  {
-    id: 13,
-    title: "Newsletter Think Labs",
-    category: "Content Strategy • UX Writing • Editorial",
-    description: "Estruturei e conduzi a estratégia editorial da newsletter Think Labs, responsável por disseminar tendências, inovação e novos modelos de negócio para públicos internos e externos do Magalu.",
-    tags: ["Content Strategy", "UX Writing", "Editorial"],
-    banner: "/images/cases/others/newsller-capa.png",
-    path: "/cases/newsletter-think-labs"
-  },
-  {
-    id: 4,
-    title: "Jornalista — Cultura Preta",
-    category: "Jornalismo / Conteúdo Editorial",
-    description: "Produção de conteúdo jornalístico voltado à cultura negra, música, comportamento e representatividade.",
-    tags: ["Cultura Preta", "Jornalismo"],
-    banner: "/images/cases/others/jornalista-1.png",
-    path: "/cases/jornalista"
-  },
-  {
-    id: 5,
-    title: "Redator e Copywriter",
-    category: "Copywriting / Conversão",
-    description: "Criação de conteúdos estratégicos orientados à conversão, relacionamento e performance digital.",
-    tags: ["Copywriting", "Conversão"],
-    banner: "/images/cases/others/copy-1.png",
-    path: "/cases/redator-copywriter"
-  },
-  {
-    id: 6,
-    title: "Social Media",
-    category: "Social Media / Conteúdo Estratégico",
-    description: "Criação de conteúdo estratégico para redes sociais, campanhas digitais e posicionamento de marca.",
-    tags: ["Social Media", "Estratégia"],
-    banner: "/images/cases/others/social-media-1.png",
-    path: "/cases/social-media"
-  }
-];
+import { useLanguage } from "../i18n/LanguageContext";
+import { translations } from "../i18n/translations";
+import { getFeaturedCases, getOtherCases } from "../i18n/casesData";
 
 export default function Cases() {
+  const { language } = useLanguage();
+  const t = translations[language].cases;
+  const featuredCases = getFeaturedCases(language);
+  const otherCases = getOtherCases(language);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [activeOtherIndex, setActiveOtherIndex] = useState(0);
@@ -144,7 +50,7 @@ export default function Cases() {
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev === featuredCases.length - 1 ? 0 : prev + 1));
-  }, []);
+  }, [featuredCases.length]);
 
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev === 0 ? featuredCases.length - 1 : prev - 1));
@@ -159,8 +65,8 @@ export default function Cases() {
   return (
     <section id="cases" className="py-24 px-6 max-w-7xl mx-auto space-y-24 overflow-hidden">
       <div className="space-y-4 text-center flex flex-col items-center">
-        <h2 className="text-3xl md:text-5xl font-bold">Principais <span className="text-brand-blue">Cases</span></h2>
-        <p className="text-secondary max-w-xl mx-auto">Conteúdo estratégico aliado à pesquisa, acessibilidade e IA para facilitar a experiência das pessoas usuárias e impulsionar resultados de negócio.</p>
+        <h2 className="text-3xl md:text-5xl font-bold">{t.titleMain} <span className="text-brand-blue">{t.titleHighlight}</span></h2>
+        <p className="text-secondary max-w-xl mx-auto">{t.subtitle}</p>
       </div>
 
       {/* Featured Carousel */}
@@ -172,7 +78,7 @@ export default function Cases() {
         <div className="relative overflow-hidden bg-white/[0.02] border border-white/5 rounded-[40px] p-1 shadow-2xl">
           <AnimatePresence mode="wait">
             <motion.div
-              key={currentIndex}
+              key={`${language}-${currentIndex}`}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
@@ -186,7 +92,7 @@ export default function Cases() {
                     <div className="space-y-8">
                       <div className="flex flex-wrap gap-2">
                         <span className="px-3 py-1 bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-[10px] font-bold rounded-lg uppercase tracking-wider flex items-center gap-1">
-                          <Sparkles size={10} /> Case em destaque
+                          <Sparkles size={10} /> {t.featuredBadge}
                         </span>
                         {featuredCases[currentIndex].tags.map((tag) => (
                           <span key={tag} className="px-3 py-1 bg-white/5 border border-white/10 text-secondary text-[10px] font-bold rounded-lg uppercase tracking-wider">
@@ -206,7 +112,7 @@ export default function Cases() {
 
                       <div className="flex items-center gap-4 pt-4">
                         <div className="px-8 py-4 bg-brand-blue text-white font-bold rounded-2xl flex items-center gap-2 glow-blue group-hover/item:shadow-[0_0_30px_rgba(0,71,188,0.5)] transition-all">
-                          Ver case completo
+                          {t.viewCase}
                           <ArrowUpRight size={20} className="group-hover/item:translate-x-1 group-hover/item:-translate-y-1 transition-transform" />
                         </div>
                       </div>
@@ -236,6 +142,7 @@ export default function Cases() {
            <button 
              onClick={prevSlide}
              className="p-2 text-secondary hover:text-white transition-colors"
+             aria-label="Previous slide"
            >
              <ChevronLeft size={24} />
            </button>
@@ -246,6 +153,7 @@ export default function Cases() {
                   key={i}
                   onClick={() => setCurrentIndex(i)}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${currentIndex === i ? "w-8 bg-brand-blue" : "bg-white/20"}`}
+                  aria-label={`Slide ${i + 1}`}
                 />
              ))}
            </div>
@@ -253,6 +161,7 @@ export default function Cases() {
            <button 
              onClick={nextSlide}
              className="p-2 text-secondary hover:text-white transition-colors"
+             aria-label="Next slide"
            >
              <ChevronRight size={24} />
            </button>
@@ -262,7 +171,7 @@ export default function Cases() {
       {/* Other Cases Section */}
       <div className="space-y-12 relative">
         <div className="space-y-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold">Outros <span className="text-brand-blue">Trabalhos</span></h2>
+          <h2 className="text-2xl md:text-3xl font-bold">{t.otherCasesTitle} <span className="text-brand-blue">{t.otherCasesHighlight}</span></h2>
           <div className="h-px w-full bg-white/5" />
         </div>
 
@@ -276,7 +185,7 @@ export default function Cases() {
           >
             {otherCases.map((c, i) => (
               <div 
-                key={c.id} 
+                key={`${language}-${c.id}`} 
                 className="w-[290px] sm:w-[350px] md:w-[380px] shrink-0" 
                 style={{ scrollSnapAlign: "start" }}
               >
@@ -296,7 +205,7 @@ export default function Cases() {
                             <span className="w-1 h-1 rounded-full bg-brand-blue" />
                             Think Labs
                           </span>
-                          <span>Inovação & Tendências</span>
+                          <span>{language === "en" ? "Innovation & Trends" : "Inovação & Tendências"}</span>
                         </div>
                       )}
                       {c.id === 5 && (
@@ -329,7 +238,7 @@ export default function Cases() {
                             <span className="w-1 h-1 rounded-full bg-brand-blue" />
                             Cultura Preta
                           </span>
-                          <span>Edição Especial</span>
+                          <span>{language === "en" ? "Special Edition" : "Edição Especial"}</span>
                         </div>
                       )}
 
@@ -363,7 +272,7 @@ export default function Cases() {
                       </div>
 
                       <div className="pt-4 border-t border-white/5 flex items-center justify-between group/link">
-                         <span className="text-xs font-bold text-white/40 group-hover/link:text-white transition-colors">Ver case completo</span>
+                         <span className="text-xs font-bold text-white/40 group-hover/link:text-white transition-colors">{t.viewCase}</span>
                          <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover/link:bg-brand-blue group-hover/link:border-brand-blue group-hover/link:text-white transition-all">
                            <ArrowUpRight size={14} className="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
                          </div>
@@ -381,7 +290,7 @@ export default function Cases() {
            <button 
              onClick={() => scrollOther('left')}
              className="p-2 text-secondary hover:text-white hover:bg-white/5 active:scale-95 border border-white/10 rounded-full transition-all"
-             aria-label="Voltar"
+             aria-label={language === "en" ? "Previous" : "Voltar"}
            >
              <ChevronLeft size={24} />
            </button>
@@ -400,6 +309,7 @@ export default function Cases() {
                     }
                   }}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${activeOtherIndex === i ? "w-8 bg-brand-blue" : "bg-white/20"}`}
+                  aria-label={`Other case ${i + 1}`}
                 />
              ))}
            </div>
@@ -407,7 +317,7 @@ export default function Cases() {
            <button 
              onClick={() => scrollOther('right')}
              className="p-2 text-secondary hover:text-white hover:bg-white/5 active:scale-95 border border-white/10 rounded-full transition-all"
-             aria-label="Avançar"
+             aria-label={language === "en" ? "Next" : "Avançar"}
            >
              <ChevronRight size={24} />
            </button>
@@ -416,3 +326,4 @@ export default function Cases() {
     </section>
   );
 }
+

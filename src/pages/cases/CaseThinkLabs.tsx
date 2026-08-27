@@ -2,8 +2,14 @@ import { motion } from "motion/react";
 import { ArrowLeft, BookOpen, Globe, Award, Info, Target, Zap, Settings, Layers, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { useLanguage } from "../../i18n/LanguageContext";
+import LanguageSelector from "../../components/LanguageSelector";
+import { thinkLabsData } from "../../i18n/cases/thinkLabsData";
 
 export default function CaseThinkLabs() {
+  const { language } = useLanguage();
+  const t = thinkLabsData[language];
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -15,12 +21,17 @@ export default function CaseThinkLabs() {
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <Link to="/" className="flex items-center gap-2 text-secondary hover:text-white transition-colors group">
             <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-            <span className="font-medium text-sm">Voltar para home</span>
+            <span className="font-medium text-sm">{t.back}</span>
           </Link>
-          <div className="hidden md:flex gap-2">
-            <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest bg-white/5 px-2 py-1 rounded">Newsletter</span>
-            <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest bg-white/5 px-2 py-1 rounded">Content Strategy</span>
-            <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest bg-white/5 px-2 py-1 rounded">Magalu</span>
+          <div className="flex items-center gap-4">
+            <div className="hidden md:flex gap-2">
+              {t.navBadges.map((badge, idx) => (
+                <span key={idx} className="text-[10px] font-bold text-white/40 uppercase tracking-widest bg-white/5 px-2 py-1 rounded">
+                  {badge}
+                </span>
+              ))}
+            </div>
+            <LanguageSelector />
           </div>
         </div>
       </nav>
@@ -35,7 +46,7 @@ export default function CaseThinkLabs() {
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-wrap justify-center md:justify-start gap-2"
           >
-            {["Content Strategy", "UX Writing", "Editorial", "Newsletter", "Pesquisa", "Inovação", "Tendências"].map(tag => (
+            {t.tags.map(tag => (
               <span key={tag} className="px-3 py-1 bg-brand-blue/10 border border-brand-blue/20 text-brand-blue text-[10px] font-bold rounded-full uppercase tracking-wider">
                 {tag}
               </span>
@@ -47,7 +58,7 @@ export default function CaseThinkLabs() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-7xl font-display font-bold leading-tight"
           >
-            Newsletter Think Labs
+            {t.title}
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -55,7 +66,7 @@ export default function CaseThinkLabs() {
             transition={{ delay: 0.2 }}
             className="text-xl md:text-2xl text-secondary leading-relaxed font-light max-w-4xl"
           >
-            Disseminando tendências, inovação e novos modelos de negócio para públicos internos e externos do Magalu.
+            {t.heroDesc}
           </motion.p>
         </div>
       </section>
@@ -72,9 +83,9 @@ export default function CaseThinkLabs() {
           <div className="flex items-center justify-between px-6 py-3 bg-[#121214] border-b border-white/5 z-20 shrink-0 text-xs text-white/45 font-bold uppercase tracking-widest font-mono">
             <span className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
-              Think Labs
+              {t.bannerHeader.brand}
             </span>
-            <span>Estratégia Editorial</span>
+            <span>{t.bannerHeader.subtitle}</span>
           </div>
 
           <div className="relative flex-1 overflow-hidden bg-[#0d0d0e] flex items-center justify-center">
@@ -92,22 +103,22 @@ export default function CaseThinkLabs() {
       <section className="px-6 py-12">
         <div className="max-w-5xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-8 border-y border-white/5 py-12">
           <div className="space-y-1">
-            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">Cargo</span>
-            <p className="text-secondary text-sm">Content Strategist & Editorial Lead</p>
+            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">{t.overview.roleLabel}</span>
+            <p className="text-secondary text-sm">{t.overview.roleValue}</p>
           </div>
           <div className="space-y-1">
-            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">Iniciativa</span>
-            <p className="text-brand-blue font-bold px-2 py-0.5 bg-brand-blue/10 rounded inline-block text-[10px]">Curadoria & Inovação</p>
+            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">{t.overview.initiativeLabel}</span>
+            <p className="text-brand-blue font-bold px-2 py-0.5 bg-brand-blue/10 rounded inline-block text-[10px]">{t.overview.initiativeValue}</p>
           </div>
           <div className="space-y-1">
-            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">Foco</span>
-            <p className="text-secondary text-sm leading-snug">UX Writing, estratégia editorial, legibilidade, tecnologia</p>
+            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">{t.overview.focusLabel}</span>
+            <p className="text-secondary text-sm leading-snug">{t.overview.focusValue}</p>
           </div>
           <div className="space-y-1">
-            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">Plataformas</span>
+            <span className="text-[10px] text-white/40 uppercase font-bold tracking-widest block">{t.overview.platformsLabel}</span>
             <p className="text-secondary text-sm font-bold flex items-center gap-2">
               <BookOpen size={14} className="text-brand-blue" />
-              Medium & Substack
+              {t.overview.platformsValue}
             </p>
           </div>
         </div>
@@ -123,11 +134,11 @@ export default function CaseThinkLabs() {
               <div className="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center">
                 <Info size={24} />
               </div>
-              <h2 className="text-3xl font-bold uppercase tracking-tight">Resumo</h2>
+              <h2 className="text-3xl font-bold uppercase tracking-tight">{t.summaryTitle}</h2>
             </div>
             
             <p className="text-secondary text-lg md:text-xl leading-relaxed">
-              Estruturei e conduzi a estratégia editorial da newsletter Think Labs, responsável por disseminar tendências, inovação e novos modelos de negócio para públicos internos e externos do Magalu.
+              {t.summaryDesc}
             </p>
           </div>
         </section>
@@ -139,11 +150,11 @@ export default function CaseThinkLabs() {
               <div className="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center">
                 <Target size={24} />
               </div>
-              <h2 className="text-3xl font-bold uppercase tracking-tight">Contexto</h2>
+              <h2 className="text-3xl font-bold uppercase tracking-tight">{t.contextTitle}</h2>
             </div>
 
             <p className="text-secondary text-lg leading-relaxed">
-              A newsletter Think Labs foi criada com o objetivo de compartilhar conhecimento estratégico sobre inovação, novos modelos de negócio de tecnologia e tendências de mercado para os públicos interno e externo do Magalu.
+              {t.contextDesc}
             </p>
           </div>
         </section>
@@ -155,11 +166,11 @@ export default function CaseThinkLabs() {
               <div className="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center">
                 <Zap size={24} />
               </div>
-              <h2 className="text-3xl font-bold uppercase tracking-tight">O Desafio</h2>
+              <h2 className="text-3xl font-bold uppercase tracking-tight">{t.challengeTitle}</h2>
             </div>
 
             <p className="text-secondary text-lg leading-relaxed">
-              Estruturar e conduzir uma estratégia editorial consistente, capaz de engajar leitores de diferentes áreas e perfis, mantendo alta qualidade de curadoria e atendendo a uma cadência periódica de entregas.
+              {t.challengeDesc}
             </p>
           </div>
         </section>
@@ -171,11 +182,11 @@ export default function CaseThinkLabs() {
               <div className="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center">
                 <Settings size={24} />
               </div>
-              <h2 className="text-3xl font-bold uppercase tracking-tight">Meu Papel</h2>
+              <h2 className="text-3xl font-bold uppercase tracking-tight">{t.roleTitle}</h2>
             </div>
 
             <p className="text-secondary text-lg leading-relaxed">
-              Conduzir a estratégia editorial, coordenar a curadoria de conteúdos técnicos de tecnologia e inovação, produzir textos claros e estruturar o design de conteúdo para maximizar a escaneabilidade.
+              {t.roleDesc}
             </p>
           </div>
         </section>
@@ -187,11 +198,11 @@ export default function CaseThinkLabs() {
               <div className="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center">
                 <Layers size={24} />
               </div>
-              <h2 className="text-3xl font-bold uppercase tracking-tight">Meu Processo de Trabalho</h2>
+              <h2 className="text-3xl font-bold uppercase tracking-tight">{t.processTitle}</h2>
             </div>
 
             <p className="text-secondary text-lg leading-relaxed">
-              Curadoria aprofundada de tendências e artigos globais, redação com foco em UX Writing para garantir clareza e síntese, formatação editorial moderna para dispositivos móveis e desktop, e distribuição consistente de conteúdo.
+              {t.processDesc}
             </p>
           </div>
         </section>
@@ -203,21 +214,15 @@ export default function CaseThinkLabs() {
               <div className="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center">
                 <Globe size={24} />
               </div>
-              <h2 className="text-3xl font-bold uppercase tracking-tight">Resultados</h2>
+              <h2 className="text-3xl font-bold uppercase tracking-tight">{t.resultsTitle}</h2>
             </div>
 
             <p className="text-secondary text-lg mb-8">
-              O impacto estruturado da estratégia editorial e curadoria de conteúdo da Newsletter Think Labs:
+              {t.resultsLead}
             </p>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                { metric: "+60", desc: "Edições publicadas entre 2024 e 2026" },
-                { metric: "+500", desc: "Seguidores nas plataformas Medium e Substack" },
-                { metric: "+280", desc: "Assinantes de e-mail" },
-                { metric: "2 anos", desc: "De cadência quinzenal consistente" },
-                { metric: "+50K", desc: "Views nas postagens" },
-              ].map((res, i) => (
+              {t.results.map((res, i) => (
                 <div key={i} className="p-8 bg-card-dark border border-white/5 rounded-3xl space-y-4 hover:border-brand-blue/20 transition-all flex flex-col justify-center">
                   <span className="text-4xl font-display font-bold text-brand-blue leading-none">{res.metric}</span>
                   <p className="text-sm text-secondary leading-relaxed font-medium">{res.desc}</p>
@@ -234,11 +239,11 @@ export default function CaseThinkLabs() {
               <div className="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center">
                 <Award size={24} />
               </div>
-              <h2 className="text-3xl font-bold uppercase tracking-tight">O que aprendi</h2>
+              <h2 className="text-3xl font-bold uppercase tracking-tight">{t.learningsTitle}</h2>
             </div>
 
             <p className="text-secondary text-lg leading-relaxed">
-              A importância da cadência constante para a construção de engajamento a longo prazo, como curar e sintetizar temas complexos em formatos leves e de rápida digestão, e aproximar pessoas de diferentes times por meio do compartilhamento de tendências de tecnologia.
+              {t.learningsDesc}
             </p>
           </div>
         </section>

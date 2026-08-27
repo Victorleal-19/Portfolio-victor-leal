@@ -4,6 +4,7 @@
  */
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { LanguageProvider } from "./i18n/LanguageContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Cases from "./components/Cases";
@@ -43,22 +44,25 @@ function Home() {
 
 export default function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-bg-dark text-white selection:bg-brand-blue selection:text-white">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/case/favoritos-e-listas-magalu" element={<CaseMagalu />} />
-          <Route path="/case/projeto-hook-magalu" element={<CaseHook />} />
-          <Route path="/case/guideline-linguagem-ecommerce-magalu" element={<CaseGuideline />} />
-          <Route path="/case/quero-de-casamento-magalu" element={<CaseQueroCasamento />} />
-          <Route path="/case/brandbook-cargo-sapiens" element={<CaseBrandbook />} />
-          <Route path="/cases/newsletter-think-labs" element={<CaseThinkLabs />} />
-          <Route path="/cases/jornalista" element={<CaseJornalista />} />
-          <Route path="/cases/redator-copywriter" element={<CaseRedatorCopywriter />} />
-          <Route path="/cases/social-media" element={<CaseSocialMedia />} />
-        </Routes>
-      </div>
-    </Router>
+    <LanguageProvider>
+      <Router>
+        <div className="min-h-screen bg-bg-dark text-white selection:bg-brand-blue selection:text-white">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/case/favoritos-e-listas-magalu" element={<CaseMagalu />} />
+            <Route path="/case/projeto-hook-magalu" element={<CaseHook />} />
+            <Route path="/case/guideline-linguagem-ecommerce-magalu" element={<CaseGuideline />} />
+            <Route path="/case/quero-de-casamento-magalu" element={<CaseQueroCasamento />} />
+            <Route path="/case/brandbook-cargo-sapiens" element={<CaseBrandbook />} />
+            <Route path="/cases/newsletter-think-labs" element={<CaseThinkLabs />} />
+            <Route path="/cases/jornalista" element={<CaseJornalista />} />
+            <Route path="/cases/redator-copywriter" element={<CaseRedatorCopywriter />} />
+            <Route path="/cases/social-media" element={<CaseSocialMedia />} />
+          </Routes>
+        </div>
+      </Router>
+    </LanguageProvider>
   );
 }
+
 
