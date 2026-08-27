@@ -19,15 +19,12 @@ export default function About() {
           {/* Photo */}
           <div className="absolute inset-0 bg-gradient-to-t from-bg-dark via-transparent to-transparent z-10 opacity-60" />
           <img 
-            src="/images/perfil.jpeg" 
+            src="/images/victor-contentwriter.png" 
             alt="Victor Leal"
             className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 hover:scale-105"
             onError={(e) => {
-              // Fallback to perfil.jpg if perfil.jpeg fails, then to Unsplash
-              if (e.currentTarget.src.includes('perfil.jpeg')) {
-                e.currentTarget.src = "/images/perfil.jpg";
-              } else if (e.currentTarget.src.includes('perfil.jpg')) {
-                e.currentTarget.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800";
+              if (!e.currentTarget.src.includes('perfil.jpeg')) {
+                e.currentTarget.src = "/images/perfil.jpeg";
               }
             }}
             referrerPolicy="no-referrer"
